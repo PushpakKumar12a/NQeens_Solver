@@ -1,16 +1,77 @@
-# React + Vite
+# N-Queens Problem
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **N-Queens problem** is a classic puzzle in computer science and mathematics:
 
-Currently, two official plugins are available:
+> Place **N queens** on an **N × N chessboard** so that **no two queens attack each other**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+That means:
 
-## React Compiler
+- No two queens share the **same row**
+- No two queens share the **same column**
+- No two queens share the **same diagonal**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Formal Definition
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Given an integer **N ≥ 1**, find all ways to place N queens on an N×N chessboard such that:
+
+- For any two queens at positions (r₁, c₁) and (r₂, c₂):
+
+  - r₁ ≠ r₂  (different rows)  
+  - c₁ ≠ c₂  (different columns)  
+  - |r₁ − r₂| ≠ |c₁ − c₂| (different diagonals)
+
+A **solution** is one complete placement of N queens satisfying these constraints.
+
+---
+
+## Existence of Solutions
+
+- N = 1 → 1 solution  
+- N = 2 and N = 3 → **no** solutions  
+- N ≥ 4 → at least one solution exists
+
+For each valid N, the number of distinct solutions grows quickly as N increases.
+
+---
+
+## Common Algorithm: Backtracking
+
+A standard way to solve N-Queens is **backtracking**:
+
+1. Place **one queen per row**.
+2. For the current row, try each column:
+   - If placing a queen there does not conflict with existing queens, place it and move to the next row.
+3. If no column works in a row, **backtrack**: remove the previous queen and try a different column.
+4. Repeat until:
+   - A full placement of N queens is found (one solution), or  
+   - All possibilities have been tried (all solutions).
+
+To check safety efficiently, we track:
+
+- Used columns: `cols[col]`
+- Main diagonals (r − c): `diag1[r - c]`
+- Anti-diagonals (r + c): `diag2[r + c]`
+
+These structures allow **O(1)** conflict checking.
+
+---
+
+## Time Complexity
+
+- In the worst case, backtracking explores a large portion of the search space.
+- The problem is **exponential** in N; there is no known polynomial-time algorithm for listing all solutions.
+- Pruning using columns and diagonals makes it feasible for **moderate N** on modern hardware.
+
+---
+
+## Applications
+
+Even though N-Queens is a puzzle, it’s widely used for:
+
+- Teaching **backtracking** and **constraint satisfaction**
+- Studying **search algorithms** and **pruning techniques**
+- Benchmarking **optimization**, **heuristics**, and **AI search** methods
+
+---
