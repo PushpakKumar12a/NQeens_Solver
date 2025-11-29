@@ -11,11 +11,7 @@ const Dryrun = () => {
   const speedRef = useRef(300);
   const [solutionCount, setSolutionCount] = useState(0);
   const [board, setBoard] = useState([]); // board[r] = c or -1
-  const [visited, setVisited] = useState({
-    cols: new Set(),
-    d1: new Set(),
-    d2: new Set(),
-  });
+  
   const [solutions, setSolutions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [celebrate, setCelebrate] = useState(false);
@@ -38,7 +34,7 @@ const Dryrun = () => {
       setN(hn);
     }
     setBoard(Array.from({ length: n }, () => -1));
-    setVisited({ cols: new Set(), d1: new Set(), d2: new Set() });
+    
     setSolutionCount(0);
     setRunning(false);
     runningRef.current = false;
@@ -106,7 +102,7 @@ const Dryrun = () => {
     runTokenRef.current++;
     // clear all state
     setBoard(Array.from({ length: validN }, () => -1));
-    setVisited({ cols: new Set(), d1: new Set(), d2: new Set() });
+    
     setSolutionCount(0);
     setSolutions([]);
     setCurrent(0);
@@ -159,7 +155,7 @@ const Dryrun = () => {
         d2.add(ad);
         if (!runningRef.current || token !== runTokenRef.current) return;
         setBoard([...b]);
-        setVisited({ cols: new Set(cols), d1: new Set(d1), d2: new Set(d2) });
+        // setVisited({ cols: new Set(cols), d1: new Set(d1), d2: new Set(d2) });
         await sleep(speedRef.current);
         while (pausedRef.current) {
           await sleep(50);
@@ -172,7 +168,7 @@ const Dryrun = () => {
         b[row] = -1;
         if (!runningRef.current || token !== runTokenRef.current) return;
         setBoard([...b]);
-        setVisited({ cols: new Set(cols), d1: new Set(d1), d2: new Set(d2) });
+        // setVisited({ cols: new Set(cols), d1: new Set(d1), d2: new Set(d2) });
         await sleep(speedRef.current);
         while (pausedRef.current) {
           await sleep(50);
