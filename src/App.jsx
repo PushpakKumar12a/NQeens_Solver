@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { solveNQueens } from './nqueens'
 import { FaChessQueen } from 'react-icons/fa'
 
@@ -101,10 +102,10 @@ const App = () => {
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div className="text-sm text-slate-300">Solution {current + 1} of {solutions.length}</div>
                 <div className="flex items-center gap-2">
-                  <a
-                    href={`/dryrun?n=${validN}`}
-                    className="rounded-md bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 px-3 py-1.5 text-sm text-white"
-                  >View Dry Run</a>
+                  <Link
+                    to={`/dryrun?n=${validN}`}
+                    className="hidden sm:inline-block rounded-md bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 px-3 py-1.5 text-sm text-white"
+                  >Dry Run</Link>
                   <button
                     onClick={prevSolution}
                     className="rounded-md bg-slate-700 hover:bg-slate-600 active:bg-slate-700 px-3 py-1.5 text-sm"
@@ -115,6 +116,12 @@ const App = () => {
                   >Next</button>
                 </div>
               </div>
+
+              {/* Mobile-only full-width Dry Run button spanning the card width */}
+              <Link
+                to={`/dryrun?n=${validN}`}
+                className="sm:hidden block w-full rounded-md bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 px-3 py-2 text-sm text-white text-center mb-4"
+              >Dry Run</Link>
 
               <div className="mx-auto select-none w-full max-w-[520px]">
                 <div
@@ -145,10 +152,6 @@ const App = () => {
           )}
         </section>
       </main>
-
-      <footer className="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-slate-400">
-        Built with React, Tailwind CSS, and react-icons.
-      </footer>
     </div>
   )
 }

@@ -1,18 +1,16 @@
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import Dryrun from './Dryrun.jsx'
 
 const root = createRoot(document.getElementById('root'))
 
-function render() {
-  const path = window.location.pathname
-  if (path.startsWith('/dryrun')) {
-    root.render(<Dryrun />)
-  } else {
-    root.render(<App />)
-  }
-}
-
-window.addEventListener('popstate', render)
-render()
+root.render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/dryrun" element={<Dryrun />} />
+    </Routes>
+  </BrowserRouter>
+)

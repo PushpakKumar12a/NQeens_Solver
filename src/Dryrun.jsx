@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from 'react-router-dom'
 import Controls from './components/Controls.jsx'
 import LiveBoard from './components/LiveBoard.jsx'
 import SavedSolutions from './components/SavedSolutions.jsx'
@@ -26,15 +27,18 @@ const Dryrun = () => {
     setCelebrate(false);
   }, []);
 
+  // Read N from URL only once on mount
   useEffect(() => {
-    // read N from search query (e.g., /dryrun?n=8)
     const params = new URLSearchParams(window.location.search);
     const hn = Number(params.get("n"));
     if (Number.isFinite(hn)) {
       setN(hn);
     }
+  }, []);
+
+  // When N changes, reset the board and related run state
+  useEffect(() => {
     setBoard(Array.from({ length: n }, () => -1));
-    
     setSolutionCount(0);
     setRunning(false);
     runningRef.current = false;
@@ -195,12 +199,12 @@ const Dryrun = () => {
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
             N-Queens Dry Run
           </h1>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="rounded-md bg-slate-700 hover:bg-slate-600 px-3 py-1.5 text-sm"
           >
             Back to Solver
-          </a>
+          </Link>
         </div>
       </header>
 
