@@ -101,6 +101,10 @@ const App = () => {
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div className="text-sm text-slate-300">Solution {current + 1} of {solutions.length}</div>
                 <div className="flex items-center gap-2">
+                  <a
+                    href={`/dryrun?n=${validN}`}
+                    className="rounded-md bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 px-3 py-1.5 text-sm text-white"
+                  >View Dry Run</a>
                   <button
                     onClick={prevSolution}
                     className="rounded-md bg-slate-700 hover:bg-slate-600 active:bg-slate-700 px-3 py-1.5 text-sm"
