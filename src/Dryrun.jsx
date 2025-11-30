@@ -6,6 +6,7 @@ import SavedSolutions from './components/SavedSolutions.jsx'
 
 const Dryrun = () => {
   const [n, setN] = useState(6);
+  const [error, setError] = useState('');
   const [speedMs, setSpeedMs] = useState(300);
   const [running, setRunning] = useState(false);
   const runningRef = useRef(false);
@@ -64,9 +65,17 @@ const Dryrun = () => {
 
   const validN = useMemo(() => {
     const x = Number(n);
-    if (!Number.isFinite(x)) return 4;
-    const intX = Math.max(1, Math.min(12, Math.floor(x)));
-    return intX;
+    if (!Number.isFinite(x)) {
+      setError('');
+      return 4;
+    }
+    const intX = Math.floor(x);
+    if (intX < 1 || intX > 12) {
+      setError(intX < 1 ? 'N must be at least 1' : 'N must be at most 12');
+    } else {
+      setError('');
+    }
+    return Math.max(1, Math.min(12, intX));
   }, [n]);
 
   async function startDryrun() {
@@ -210,8 +219,9 @@ const Dryrun = () => {
 
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         <Controls
-          validN={validN}
           n={n}
+          validN={validN}
+          error={error}
           setN={setN}
           speedMs={speedMs}
           setSpeedMs={setSpeedMs}
